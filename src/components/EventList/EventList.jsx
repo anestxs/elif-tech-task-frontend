@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../redux/events/eventsOps.js";
 import {
   selectAllEvents,
+  selectAllItems,
   selectError,
   selectIsLoading,
 } from "../../redux/events/eventsSelectors.js";
@@ -15,6 +16,9 @@ import { TailSpin } from "react-loader-spinner";
 export default function EventList() {
   const dispatch = useDispatch();
   const events = useSelector(selectAllEvents);
+  const { totalPages, currentPage } = useSelector(selectAllItems);
+  console.log(totalPages, currentPage);
+
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const [page, setPage] = useState(1);
@@ -62,9 +66,11 @@ export default function EventList() {
             })}
         </ul>
       )}
-      <Button onClickFunction={() => setPage((prevPage) => prevPage + 1)}>
-        Load more events
-      </Button>
+      {currentPage < totalPages && (
+        <Button onClickFunction={() => setPage((prevPage) => prevPage + 1)}>
+          Load more events
+        </Button>
+      )}
       <Toaster />
     </>
   );

@@ -5,6 +5,7 @@ const eventsSlice = createSlice({
   name: "events",
   initialState: {
     items: [],
+    events: [],
     isLoading: false,
     error: null,
   },
@@ -15,7 +16,13 @@ const eventsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchEvents.fulfilled, (state, action) => {
-        state.items = [...state.items, ...action.payload.events];
+        const { totalEvents, currentPage, totalPages } = action.payload;
+        state.items = {
+          totalEvents,
+          currentPage,
+          totalPages,
+        };
+        state.events = [...state.events, ...action.payload.events];
         state.isLoading = false;
       })
       .addCase(fetchEvents.rejected, (state) => {
