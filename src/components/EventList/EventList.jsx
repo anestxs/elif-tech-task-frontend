@@ -17,8 +17,6 @@ export default function EventList() {
   const dispatch = useDispatch();
   const events = useSelector(selectAllEvents);
   const { totalPages, currentPage } = useSelector(selectAllItems);
-  console.log(totalPages, currentPage);
-
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const [page, setPage] = useState(1);
@@ -26,6 +24,25 @@ export default function EventList() {
   useEffect(() => {
     dispatch(fetchEvents(page));
   }, [dispatch, page]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight
+      ) {
+        if (currentPage < totalPages) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [currentPage, totalPages]);
 
   if (error) {
     toast.error("Something went wrong, please try again");
@@ -59,6 +76,7 @@ export default function EventList() {
               return (
                 <EventListItem
                   key={event._id}
+                  id={event._id}
                   title={event.title}
                   description={event.description}
                 />

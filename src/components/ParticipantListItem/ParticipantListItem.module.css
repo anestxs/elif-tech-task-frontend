@@ -9,16 +9,10 @@
     gap: 10px;
 }
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-}
-
-.title {
+.name {
     margin: 0;
 }
 
-.description {
+.email {
     margin: 0;
 }

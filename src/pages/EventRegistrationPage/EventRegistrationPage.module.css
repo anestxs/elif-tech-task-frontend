@@ -1,0 +1,50 @@
+.form {
+    border: 1px solid #000000;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 40%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.wrapper {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.error-text {
+    font-size: small;
+    color: red;
+    margin: 0;
+}
+
+.input {
+    width: 60%;
+    overflow: hidden;
+}
+
+.radio-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.calendar {
+    margin-bottom: 140px;
+}
+
+.btn {
+    background-color: cornflowerblue;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    max-width: 150px;
+}
