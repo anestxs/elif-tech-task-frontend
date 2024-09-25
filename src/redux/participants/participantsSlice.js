@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchParticipants } from "./participantsOps";
+import { fetchParticipants, addParticipant } from "./participantsOps";
 
 const participantsSlice = createSlice({
   name: "participants",
@@ -19,6 +19,18 @@ const participantsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchParticipants.rejected, (state) => {
+        state.error = true;
+        state.isLoading = false;
+      })
+      .addCase(addParticipant.pending, (state) => {
+        state.error = false;
+        state.isLoading = true;
+      })
+      .addCase(addParticipant.fulfilled, (state, action) => {
+        state.items = [...state.items, action.payload];
+        state.isLoading = false;
+      })
+      .addCase(addParticipant.rejected, (state) => {
         state.error = true;
         state.isLoading = false;
       }),

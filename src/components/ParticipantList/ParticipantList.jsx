@@ -3,7 +3,7 @@ import ParticipantListItem from "../ParticipantListItem/ParticipantListItem.jsx"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchParticipants } from "../../redux/participants/participantsOps.js";
 import {
-  selectAllParticipants,
+  selectFilteredParticipants,
   selectError,
   selectIsLoading,
 } from "../../redux/participants/participantsSelectors.js";
@@ -11,10 +11,11 @@ import { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { TailSpin } from "react-loader-spinner";
 import { useParams } from "react-router-dom";
+import SearchBox from "../SearchBox/SearchBox.jsx";
 
 export default function EventList() {
   const dispatch = useDispatch();
-  const participants = useSelector(selectAllParticipants);
+  const participants = useSelector(selectFilteredParticipants);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const { eventId } = useParams();
@@ -50,6 +51,7 @@ export default function EventList() {
           />
         </div>
       )}
+      <SearchBox property={"participants"} />
       {error ||
         (participants && (
           <ul className={css.list}>

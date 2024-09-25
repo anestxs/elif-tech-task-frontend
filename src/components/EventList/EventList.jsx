@@ -1,10 +1,9 @@
 import css from "./EventList.module.css";
 import EventListItem from "../EventListItem/EventListItem.jsx";
-import Button from "../UI/Button/Button.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEvents } from "../../redux/events/eventsOps.js";
 import {
-  selectAllEvents,
+  selectFilteredEvents,
   selectAllItems,
   selectError,
   selectIsLoading,
@@ -12,10 +11,11 @@ import {
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { TailSpin } from "react-loader-spinner";
+import SearchBox from "../SearchBox/SearchBox.jsx";
 
 export default function EventList() {
   const dispatch = useDispatch();
-  const events = useSelector(selectAllEvents);
+  const events = useSelector(selectFilteredEvents);
   const { totalPages, currentPage } = useSelector(selectAllItems);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -69,6 +69,7 @@ export default function EventList() {
           />
         </div>
       )}
+      <SearchBox property={"events"} />
       {events && (
         <ul className={css.list}>
           {events &&
@@ -85,9 +86,12 @@ export default function EventList() {
         </ul>
       )}
       {currentPage < totalPages && (
-        <Button onClickFunction={() => setPage((prevPage) => prevPage + 1)}>
+        <button
+          className={css.btn}
+          onClick={() => setPage((prevPage) => prevPage + 1)}
+        >
           Load more events
-        </Button>
+        </button>
       )}
       <Toaster />
     </>

@@ -6,7 +6,6 @@ import { addParticipant } from "../../redux/participants/participantsOps";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import { useParams } from "react-router-dom";
-import Toaster, { toast } from "react-hot-toast";
 
 export default function EventRegistrationPage() {
   const { eventId } = useParams();
@@ -19,14 +18,7 @@ export default function EventRegistrationPage() {
   const handleSubmit = (values, actions) => {
     dispatch(
       addParticipant({ eventId, participant: { ...values, dateOfBirth: date } })
-    )
-      .unwrap()
-      .then(() => {
-        toast.success("You have successfully registered for the event!");
-      })
-      .catch(() => {
-        toast.error("Something went wrong! Please try again!");
-      });
+    );
     actions.resetForm();
   };
 
@@ -87,8 +79,6 @@ export default function EventRegistrationPage() {
           </button>
         </Form>
       </Formik>
-
-      <Toaster />
     </>
   );
 }
